@@ -6,7 +6,7 @@ import { Channel } from './model/channel/channel.entity';
 import { Guild } from './model/guild/guild.entity';
 import { Match } from './model/match/match.entity';
 import { Message } from './model/message/message.entity';
-import userRouter from './routers/user.router';
+import { createRouter } from './routers/generic.router';
 
 const app = express();
 const port = 8080;
@@ -18,45 +18,20 @@ createConnection().then((connection) => {
     const matchRepository = connection.getRepository(Match);
     const userRepository = connection.getRepository(User);
 
-    
+    const userRouter = createRouter(userRepository);
+    const matchRouter = createRouter(matchRepository);
+    const channelRouter = createRouter(channelRepository);
+    const messageRouter = createRouter(messageRepository);
+    const guildRouter = createRouter(guildRepository);
 
-    app.use('/test', userRouter);
+    app.use('/users', userRouter);
+    app.use('/messages', messageRouter);
+    app.use('/channels', channelRouter);
+    app.use('/guilds', guildRouter);
+    app.use('/matches', matchRouter);
 
-    // app.get( "/", async ( req, res ) => {
-    //     const users = await userRepository.find();
-    //     res.json(users);
-    //     // res.send( "Hello world!" );
-    // } );
-
-    // app.get("/users/:id", async function(req: Request, res: Response) {
-    //     const results = await userRepository.findOne(req.params.id);
-    //     return res.send(results);
-    // });
-
-    // app.post("/users", async function(req: Request, res: Response) {
-    //     const user = await userRepository.create(req.body);
-    //     const results = await userRepository.save(user);
-    //     return res.send(results);
-    // });
-
-    // app.put("/users/:id", async function(req: Request, res: Response) {
-    //     const user = await userRepository.findOne(req.params.id);
-    //     if (user) {
-    //         userRepository.merge(user, req.body);
-    //         const results = await userRepository.save(user);
-    //         return res.send(results);
-    //     }
-    // });
-
-    // app.delete("/users/:id", async function(req: Request, res: Response) {
-    //     const results = await userRepository.delete(req.params.id);
-    //     return res.send(results);
-    // });
-
-    // start the Express server
     app.listen( port, () => {
         // tslint:disable-next-line:no-console
         console.log( `server started at http://localhost:${ port }` );
     } );
-
 })
