@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinTable, ManyToMany } from 'typeorm';
+import { Guild } from '../guild/guild.entity';
 
 enum Role {
     USER = 1,
@@ -42,4 +43,12 @@ export class User {
 
     @Column()
     score: number = 0;
+
+    // N - 1 A user has one guild
+    @ManyToOne(type => Guild, guild => guild.members) 
+    guild: Guild = new Guild();
+
+    // N - N A user has many friends
+    @ManyToMany(type => User) @JoinTable() 
+    friends?: User[];
 }

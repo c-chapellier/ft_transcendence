@@ -5,7 +5,13 @@
     "username": "root",
     "password": "root",
     "database": "test",
-    "entities": ["src/model/user/*.ts"],
+    "entities": [
+      "src/model/user/user.entity.ts",
+      "src/model/guild/guild.entity.ts",
+      "src/model/match/match.entity.ts",
+      "src/model/channel/channel.entity.ts",
+      "src/model/message/message.entity.ts"
+    ],
     "logging": true,
     "synchronize": true
-  }
+}
