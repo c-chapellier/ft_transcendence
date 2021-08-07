@@ -4,6 +4,7 @@ Website to play pong online
 <!-- ```bash
 docker-compose up –build
 ``` -->
+## Installation
 
 You must create a `.env` file in the backend directory
 ```
@@ -17,6 +18,8 @@ MODE=DEV
 RUN_MIGRATIONS=true
 ```
 
+Then run `npm install`
+
 ## Frontend
 React Typescript
 ### Base
@@ -25,6 +28,9 @@ npx create-react-app frontend --template typescript
 ```
 
 ## Backend
+
+https://medium.com/@gausmann.simon/nestjs-typeorm-and-postgresql-full-example-development-and-project-setup-working-with-database-c1a2b1b11b8f
+
 NestJS
 ### Base
 ```bash
