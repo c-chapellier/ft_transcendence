@@ -18,7 +18,7 @@ MODE=DEV
 RUN_MIGRATIONS=true
 ```
 
-Then run
+Then start docker and run
 ```bash
 npm install                 # install the dependencies
 npm run start:dev:db        # start the datebase
