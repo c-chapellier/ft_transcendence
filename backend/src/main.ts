@@ -10,10 +10,9 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(
       app,
       new DocumentBuilder()
-        .setTitle('Item API')
-        .setDescription('My Item API').build(),)
+        .setTitle('Transcendance API')
+        .setDescription('The official API of the Transcendance project').build(),)
 
-    // SwaggerModule.setup('docs', app, document);
     SwaggerModule.setup('api', app, document);
   }
   app.enableCors();

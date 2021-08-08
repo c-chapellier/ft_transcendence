@@ -1,10 +1,7 @@
 # ft_transcendence
 Website to play pong online
 
-<!-- ```bash
-docker-compose up –build
-``` -->
-## Installation
+## Backend Installation (NestJS & PostgreSQL)
 
 You must create a `.env` file in the backend directory
 ```
@@ -19,6 +16,7 @@ RUN_MIGRATIONS=true
 ```
 
 Then start docker and run
+
 ```bash
 npm install                 # install the dependencies
 npm run start:dev:db        # start the datebase
@@ -26,24 +24,27 @@ npm run start:dev:db:seed   # add mock data to the db
 npm run start:dev           # start the service
 ```
 
-If all works fine, you can go to http://localhost:3000/api/#/ to see the api documentation and http://localhost:3000/item to see the items in the db
+If all works fine, you can go to http://localhost:3001/api/#/ to see the api documentation
 
-## Frontend
+## Frontend Installation (React Typescript)
 
-React Typescript
-
-### Initialisation script
+Open an other terminal then run
 
 ```bash
-npx create-react-app frontend --template typescript
+npm install                 # install the dependencies
+yarn start                  # start the app
 ```
 
-## Backend
-
-NestJS & PostgreSQL
-
-https://medium.com/@gausmann.simon/nestjs-typeorm-and-postgresql-full-example-development-and-project-setup-working-with-database-c1a2b1b11b8f
+If all works fine, you can go to http://localhost:3000/ to visit the website
 
 
-user -> name level nbrVictory nbrLoss achievements avatar has2FactorAuth friends status(online, offline, in a game) matchHistory blockUsers
-channel -> public/private password owner admins users messageHistory
+## Documentation
+
+[NestJS + Postgresql tutorial](https://medium.com/@gausmann.simon/nestjs-typeorm-and-postgresql-full-example-development-and-project-setup-working-with-database-c1a2b1b11b8f)
+
+## Create a database migration
+
+```bash
+npm run typeorm:migration:generate -- migration_name
+npm run typeorm:migration:run
+```
