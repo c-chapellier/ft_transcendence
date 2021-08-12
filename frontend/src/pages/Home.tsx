@@ -1,10 +1,8 @@
 import React from 'react'
 import { User } from '../interfaces/IGlobal'
 import { getAllUsers } from '../api/UserService'
-import NavBar from '../components/NavBar'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box } from '@material-ui/core'
-import Footer from '../components/Footer'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -37,7 +35,6 @@ const Home = (): JSX.Element => {
 
   return (
     <div className={classes.home}>
-      <NavBar />
       <Box className={classes.body}>
         {items.map((item) => (
           <div key={item.id}>
@@ -47,7 +44,6 @@ const Home = (): JSX.Element => {
           </div>
         ))}
       </Box>
-      <Footer title="Transcendance" description="A really good website" />
     </div>
   )
 }
