@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, OneToMany } from 'typeorm';
+import { ChannelEntity } from './channel.entity';
+import { MessageEntity } from './message.entity';
 
 @Entity({ name: 'user' })
 export class UserEntity {
@@ -44,4 +46,10 @@ export class UserEntity {
 
   // @Column({ type: 'int', default: [] })
   // achievements: Achievement[];
+
+  @OneToMany(type => MessageEntity, message => message.sender)
+  messages: MessageEntity[];
+
+  @OneToMany(type => ChannelEntity, channel => channel.owner)
+  channels: ChannelEntity[];
 }

@@ -13,6 +13,10 @@ export class UserService {
       .then(users => users.map(user => UserDTO.fromEntity(user)))
   }
 
+  public async getOneUser(id: string): Promise<UserDTO> {
+    return UserDTO.fromEntity(await this.repo.findOne(id));
+  }
+
   public async create(dto: UserDTO): Promise<UserDTO> {
     return this.repo.save(dto.toEntity())
       .then(user => UserDTO.fromEntity(user))
