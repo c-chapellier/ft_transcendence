@@ -1,3 +1,5 @@
+import { ChannelDTO } from '@src/channel/channel.dto';
+import { MessageDTO } from '@src/message/message.dto';
 import { IsBoolean, IsNumber, IsString, IsUUID, } from 'class-validator';
 import { UserEntity } from '../model/user.entity';
 
@@ -12,16 +14,13 @@ export class UserDTO implements Readonly<UserDTO> {
   description: string
 
   @IsBoolean()
-  isOnline: boolean
-
-  @IsBoolean()
-  isPlaying: boolean
+  status: number
 
   @IsBoolean()
   has2FactorAuth: boolean
 
   @IsNumber()
-  level: number
+  score: number
 
   @IsNumber()
   nbrVictory: number
@@ -29,17 +28,22 @@ export class UserDTO implements Readonly<UserDTO> {
   @IsNumber()
   nbrLoss: number
 
+  messages: MessageDTO[];
+
+  channels: ChannelDTO[];
+
   public static from(dto: Partial<UserDTO>) {
     const newUser = new UserDTO();
     newUser.id = dto.id
     newUser.name = dto.name
     newUser.description = dto.description
-    newUser.isOnline = dto.isOnline
-    newUser.isPlaying = dto.isPlaying
+    newUser.status = dto.status
     newUser.has2FactorAuth = dto.has2FactorAuth
-    newUser.level = dto.level
+    newUser.score = dto.score
     newUser.nbrVictory = dto.nbrVictory
     newUser.nbrLoss = dto.nbrLoss
+    newUser.messages = dto.messages
+    newUser.channels = dto.channels
     return newUser
   }
 
@@ -48,12 +52,13 @@ export class UserDTO implements Readonly<UserDTO> {
       id: entity.id,
       name: entity.name,
       description: entity.description,
-      isOnline: entity.isOnline,
-      isPlaying: entity.isPlaying,
+      status: entity.status,
       has2FactorAuth: entity.has2FactorAuth,
-      level: entity.level,
+      score: entity.score,
       nbrVictory: entity.nbrVictory,
       nbrLoss: entity.nbrLoss,
+      messages: entity.messages ? entity.messages.map(m => MessageDTO.fromEntity(m)) : [],
+      channels: entity.channels ? entity.channels.map(m => ChannelDTO.fromEntity(m)) : []
     });
   }
 
@@ -62,12 +67,13 @@ export class UserDTO implements Readonly<UserDTO> {
     newUser.id = this.id
     newUser.name = this.name
     newUser.description = this.description
-    newUser.isOnline = this.isOnline
-    newUser.isPlaying = this.isPlaying
+    newUser.status = this.status
     newUser.has2FactorAuth = this.has2FactorAuth
-    newUser.level = this.level
+    newUser.score = this.score
     newUser.nbrVictory = this.nbrVictory
     newUser.nbrLoss = this.nbrLoss
+    newUser.messages = this.messages.map(m => m.toEntity())
+    newUser.channels = this.channels.map(c => c.toEntity())
     return newUser
   }
 }

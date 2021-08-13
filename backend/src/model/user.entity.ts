@@ -1,3 +1,4 @@
+import { StatusEnum } from './../components/enum';
 import { Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, OneToMany } from 'typeorm';
 import { ChannelEntity } from './channel.entity';
 import { MessageEntity } from './message.entity';
@@ -8,26 +9,23 @@ export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 300 })
+  @Column({ type: 'varchar', length: 50 })
   name: string;
 
-  // @Column({ type: 'varchar', length: 300 })
+  // @Column({ type: 'bytea'})
   // avatar: string;
 
   @Column({ type: 'varchar', length: 300 })
   description: string;
 
-  @Column({ type: 'boolean', default: true })
-  isOnline: boolean;
-
-  @Column({ type: 'boolean', default: false })
-  isPlaying: boolean;
+  @Column({type: 'int', default: StatusEnum.DISCONNECTED})
+  status: StatusEnum;
 
   @Column({ type: 'boolean', default: false })
   has2FactorAuth: boolean;
 
   @Column({ type: 'int', default: 0 })
-  level: number;
+  score: number;
 
   @Column({ type: 'int', default: 0 })
   nbrVictory: number;
@@ -40,9 +38,6 @@ export class UserEntity {
 
   // @Column({ type: 'int', default: [] })
   // blockUsers: UserEntity[];
-
-  // @Column({ type: 'int', default: [] })
-  // matchHistory: Match[];
 
   // @Column({ type: 'int', default: [] })
   // achievements: Achievement[];

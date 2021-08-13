@@ -29,7 +29,7 @@ export class MessageDTO implements Readonly<MessageDTO> {
           text: entity.text,
           date: entity.date,
           channel: ChannelDTO.fromEntity(entity.channel),
-          sender: UserDTO.from(entity.sender)
+          sender: UserDTO.fromEntity(entity.sender)
         });
       }
     

@@ -11,6 +11,7 @@ import { channel } from 'diagnostics_channel'
 import { MessageEntity } from '@src/model/message.entity'
 import { MessageService } from '@src/message/message.service'
 import { MessageDTO } from '@src/message/message.dto'
+import { StatusEnum } from '@src/components/enum'
 
 const run = async () => {
   const opt = {
@@ -22,67 +23,72 @@ const run = async () => {
   const connection = await createConnection(opt as ConnectionOptions)
 
   // USERS
-  console.log("Create users")
+  console.log("[USERS..]")
   const users = await new UserService(connection.getRepository(UserEntity)).getAllUsers();
   if(users.length == 0)
     await createUsers(connection);
 
   // CHANNELS
-  console.log("Create channels")
+  console.log("[CHANNELS..]")
   const channels = await new ChannelService(connection.getRepository(ChannelEntity)).getAllChannels();
   if(channels.length == 0)
     await createChannels(connection);
 
   // Messages
-  console.log("Create messages")
+  console.log("[MESSAGES..]")
   const messages = await new MessageService(connection.getRepository(MessageEntity)).getAllMessages();
   if(messages.length == 0)
     await createMessages(connection);
 }
 
 async function createUsers(connection: Connection) {
+  console.log("Create users..")
   const userService = new UserService(connection.getRepository(UserEntity))
 
   const mockUsers = [
     {
       name: 'Yves',
       description: 'salut y',
-      isOnline: true,
-      isPlaying: false,
+      status: StatusEnum.DISCONNECTED,
       has2FactorAuth: false,
-      level: 12,
+      score: 400,
       nbrVictory: 1,
       nbrLoss: 736,
+      messages: [],
+      channels: [],
     },
     {
       name: 'Gautier',
       description: 'salut g',
-      isOnline: true,
-      isPlaying: false,
+      status: StatusEnum.DISCONNECTED,
       has2FactorAuth: false,
-      level: 14,
+      score: 400,
       nbrVictory: 2,
       nbrLoss: 1,
+      messages: [],
+      channels: [],
     },
     {
       name: 'Arthur',
       description: 'salut a',
-      isOnline: true,
-      isPlaying: false,
+      status: StatusEnum.DISCONNECTED,
       has2FactorAuth: false,
-      level: 20,
+      score: 400,
       nbrVictory: 20,
       nbrLoss: 20,
+      messages: [],
+      channels: [],
     },
     {
       name: 'Corentin',
       description: 'salut c',
-      isOnline: true,
-      isPlaying: false,
+      status: StatusEnum.DISCONNECTED,
       has2FactorAuth: false,
-      level: 200,
+      score: 400,
       nbrVictory: 1000,
       nbrLoss: 0,
+      messages: [],
+      channels: [],
     },
   ]
 
@@ -95,10 +101,9 @@ async function createUsers(connection: Connection) {
 }
 
 async function createChannels(connection: Connection) {
+  console.log("Create channels..")
   const channelService = new ChannelService(connection.getRepository(ChannelEntity));
   const users = await new UserService(connection.getRepository(UserEntity)).getAllUsers();
-
-  console.log(users);
 
   const mockChannels = [
     {
@@ -126,10 +131,14 @@ async function createChannels(connection: Connection) {
 }
 
 async function createMessages(connection: Connection) {
+  console.log("create messages..")
+  console.log("service");
   const messageService = new MessageService(connection.getRepository(MessageEntity));
+  console.log("channels");
   const channels = await new ChannelService(connection.getRepository(ChannelEntity)).getAllChannels();
+  console.log("users");
   const users = await new UserService(connection.getRepository(UserEntity)).getAllUsers();
-
+  console.log("oui");
   console.log(channels);
   console.log(users);
 

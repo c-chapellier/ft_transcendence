@@ -9,8 +9,9 @@ export class ChannelService {
   constructor(@InjectRepository(ChannelEntity) private readonly repo: Repository<ChannelEntity>) { }
 
   public async getAllChannels(): Promise<ChannelDTO[]> {
-    return await this.repo.find()
+    const channels = await this.repo.find()
       .then(channels => channels.map(channel => ChannelDTO.fromEntity(channel)))
+    return channels
   }
 
   public async getOneChannel(id: string): Promise<ChannelDTO> {

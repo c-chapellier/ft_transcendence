@@ -9,8 +9,9 @@ export class UserService {
   constructor(@InjectRepository(UserEntity) private readonly repo: Repository<UserEntity>) { }
 
   public async getAllUsers(): Promise<UserDTO[]> {
-    return await this.repo.find()
+    const users =  await this.repo.find()
       .then(users => users.map(user => UserDTO.fromEntity(user)))
+    return users;
   }
 
   public async getOneUser(id: string): Promise<UserDTO> {
