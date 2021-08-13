@@ -4,15 +4,20 @@ import { UserDTO } from './user.dto';
 
 @Controller('user')
 export class UserController {
-  constructor(private serv: UserService) { }
+  constructor(private service: UserService) { }
 
   @Get()
   public async getAllUsers(): Promise<UserDTO[]> {
-    return await this.serv.getAllUsers()
+    return await this.service.getAllUsers()
+  }
+
+  @Get(':id')
+  public async getOneUser(@Param('id') id: string): Promise<UserDTO> {
+    return await this.service.getOneUser(id);
   }
 
   @Post()
   public async post(@Body() dto: UserDTO): Promise<UserDTO> {
-    return this.serv.create(dto);
+    return this.service.create(dto);
   }
 }
