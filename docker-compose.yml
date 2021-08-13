@@ -1,0 +1,50 @@
+version: "3.7"
+services:
+  frontend:
+    build: frontend
+    ports:
+      - 3000:3000
+    stdin_open: true
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    container_name: frontend
+    restart: always
+    networks:
+      - react-nest
+    depends_on:
+      - backend
+
+  backend:
+    container_name: backend
+    restart: always
+    build: backend
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - postgres
+    networks:
+      - nest-postgres
+      - react-nest
+    ports:
+      - 3001:3001
+    expose:
+      - 3001
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      PGDATA: /data/postgres
+    ports:
+      - 5432:5432
+    networks:
+      - nest-postgres
+
+networks:
+  react-nest:
+  nest-postgres:
