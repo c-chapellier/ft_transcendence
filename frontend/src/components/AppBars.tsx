@@ -118,6 +118,10 @@ const AppBars = (): JSX.Element => {
       name: 'Stats',
       route: '/stats'
     },
+    {
+      name: 'LeaderBoard',
+      route: '/leaderboard'
+    },
   ]
 
   return (

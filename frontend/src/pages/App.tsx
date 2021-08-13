@@ -8,6 +8,7 @@ import PageNotFound from './PageNotFound'
 import AppBars from '../components/AppBars'
 import Chat from './Chat'
 import Game from './Game'
+import { Leaderboard } from './leaderboard/Leaderboard'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,6 +44,7 @@ const App = (): JSX.Element => {
             <Route path="/profile" component={Profile} />
             <Route path="/game" component={Game} />
             <Route path="/chat" component={Chat} />
+            <Route path="/leaderboard" component={Leaderboard} />
             <Route component={PageNotFound} />
           </Switch>
         </main>
