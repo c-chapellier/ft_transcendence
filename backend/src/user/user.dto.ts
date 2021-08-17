@@ -4,28 +4,20 @@ import { IsBoolean, IsNumber, IsString, IsUUID, } from 'class-validator';
 import { UserEntity } from '../model/user.entity';
 
 export class UserDTO implements Readonly<UserDTO> {
-  @IsUUID()
   id: string
 
-  @IsString()
   name: string
 
-  @IsString()
   description: string
 
-  @IsBoolean()
   status: number
 
-  @IsBoolean()
   has2FactorAuth: boolean
 
-  @IsNumber()
   score: number
 
-  @IsNumber()
   nbrVictory: number
 
-  @IsNumber()
   nbrLoss: number
 
   messages: MessageDTO[];
@@ -57,8 +49,8 @@ export class UserDTO implements Readonly<UserDTO> {
       score: entity.score,
       nbrVictory: entity.nbrVictory,
       nbrLoss: entity.nbrLoss,
-      messages: entity.messages ? entity.messages.map(m => MessageDTO.fromEntity(m)) : [],
-      channels: entity.channels ? entity.channels.map(m => ChannelDTO.fromEntity(m)) : []
+      // messages: entity.messages ? entity.messages.map(m => MessageDTO.fromEntity(m)) : [],
+      // channels: entity.channels ? entity.channels.map(m => ChannelDTO.fromEntity(m)) : []
     });
   }
 
@@ -72,8 +64,8 @@ export class UserDTO implements Readonly<UserDTO> {
     newUser.score = this.score
     newUser.nbrVictory = this.nbrVictory
     newUser.nbrLoss = this.nbrLoss
-    newUser.messages = this.messages.map(m => m.toEntity())
-    newUser.channels = this.channels.map(c => c.toEntity())
+    // newUser.messages = this.messages.map(m => m.toEntity())
+    // newUser.channels = this.channels.map(c => c.toEntity())
     return newUser
   }
 }

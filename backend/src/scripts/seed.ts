@@ -132,15 +132,9 @@ async function createChannels(connection: Connection) {
 
 async function createMessages(connection: Connection) {
   console.log("create messages..")
-  console.log("service");
   const messageService = new MessageService(connection.getRepository(MessageEntity));
-  console.log("channels");
   const channels = await new ChannelService(connection.getRepository(ChannelEntity)).getAllChannels();
-  console.log("users");
   const users = await new UserService(connection.getRepository(UserEntity)).getAllUsers();
-  console.log("oui");
-  console.log(channels);
-  console.log(users);
 
   const mockMessages = [
     {

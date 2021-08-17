@@ -19,7 +19,7 @@ export class ChannelService {
   }
 
   public async create(dto: ChannelDTO): Promise<ChannelDTO> {
-    return this.repo.save(dto.toEntity())
+    return this.repo.save(dto)
       .then(channel => ChannelDTO.fromEntity(channel))
   }
 }

@@ -14,7 +14,7 @@ export class MessageService {
   }
 
   public async create(dto: MessageDTO): Promise<MessageDTO> {
-    return this.repo.save(dto.toEntity())
+    return this.repo.save(dto)
       .then(message => MessageDTO.fromEntity(message))
   }
 }

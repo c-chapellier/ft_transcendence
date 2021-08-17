@@ -28,8 +28,8 @@ export class MessageDTO implements Readonly<MessageDTO> {
           id: entity.id,
           text: entity.text,
           date: entity.date,
-          channel: ChannelDTO.fromEntity(entity.channel),
-          sender: UserDTO.fromEntity(entity.sender)
+          // channel: ChannelDTO.fromEntity(entity.channel),
+          // sender: UserDTO.fromEntity(entity.sender)
         });
       }
     
@@ -38,8 +38,8 @@ export class MessageDTO implements Readonly<MessageDTO> {
         newChannel.id = this.id
         newChannel.text = this.text
         newChannel.date = this.date;
-        newChannel.channel = this.channel.toEntity();
-        newChannel.sender = this.sender.toEntity();
+        // newChannel.channel = this.channel.toEntity();
+        // newChannel.sender = this.sender.toEntity();
         return newChannel;
       }
 }

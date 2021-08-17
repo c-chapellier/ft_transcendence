@@ -18,7 +18,6 @@ export class ChannelDTO implements Readonly<ChannelDTO> {
 
 
   public static from(dto: Partial<ChannelDTO>) {
-    console.log("from")
     const newChannel = new ChannelDTO();
     newChannel.id = dto.id
     newChannel.name = dto.name
@@ -30,14 +29,14 @@ export class ChannelDTO implements Readonly<ChannelDTO> {
   }
 
   public static fromEntity(entity: ChannelEntity) {
-    console.log("from entity", entity, entity.owner)
+    //console.log("from entity", entity, entity.owner)
     return this.from({
       id: entity.id,
       pwd: entity.pwd,
       name: entity.name,
-      owner: UserDTO.fromEntity(entity.owner),
-      users: entity.users ? entity.users.map(user => UserDTO.fromEntity(user)) : [],
-      messages: entity.messages ? entity.messages.map(message => MessageDTO.fromEntity(message)) : [],
+      // owner: UserDTO.fromEntity(entity.owner),
+      // users: entity.users ? entity.users.map(user => UserDTO.fromEntity(user)) : [],
+      // messages: entity.messages ? entity.messages.map(message => MessageDTO.fromEntity(message)) : [],
     });
   }
 
@@ -46,9 +45,9 @@ export class ChannelDTO implements Readonly<ChannelDTO> {
     newChannel.id = this.id
     newChannel.name = this.name
     newChannel.pwd = this.pwd
-    newChannel.owner = this.owner.toEntity();
-    newChannel.users = this.users.map(user => user.toEntity()) || [];
-    newChannel.messages = this.messages.map(message => message.toEntity()) || [];
+    // newChannel.owner = this.owner.toEntity();
+    // newChannel.users = this.users.map(user => user.toEntity()) || [];
+    // newChannel.messages = this.messages.map(message => message.toEntity()) || [];
     return newChannel;
   }
 }
