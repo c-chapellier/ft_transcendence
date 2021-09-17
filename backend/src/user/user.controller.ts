@@ -13,7 +13,7 @@ export class UserController {
 
   @Get(':id')
   public async getOneUser(@Param('id') id: string): Promise<UserDTO> {
-    return await this.service.getOneUser(id);
+    return await this.service.getUserById(id);
   }
 
   @Post()
