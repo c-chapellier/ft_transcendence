@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Home from './Home'
+// import Home from './Home'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Theme } from '@material-ui/core'
 import { Route, Switch } from 'react-router-dom'

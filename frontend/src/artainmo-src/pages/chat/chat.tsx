@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import accountType from '../../types/accountType';
+import { dataBaseAccounts } from '../../types/database';
 // import { dataBaseChannels } from '../../types/database';
 
 
@@ -26,8 +27,42 @@ interface chatProps {
   back?: () => void
 }
 
+const AddUsers: React.FC<chatProps3> = ({ account, changeAccount, chatIndex }) => {
+  const [searchResults, setSearchResults] = useState<string[][]>([]);
+  const [searchText, setSearchText] = useState<string>('');
+
+  const handleSearch: (searchValue: string) => void = (searchValue) => {
+    let searchResults: string[][] = [];
+
+    dataBaseAccounts.forEach((item) => searchValue.length !== 0 && !account.chatChannels[chatIndex!].users.find((elem)=>elem.name === item[0])
+                              && item[0].includes(searchValue) && item[0] !== account.name && searchResults.push(item))
+    setSearchText(searchValue);
+    setSearchResults(searchResults);
+  }
+
+  return (<div>
+						<h3>Add users: </h3>
+            <input type="text" value={searchText} onChange={(e) => handleSearch(e.target.value)}/><br/>
+            {searchResults.map((item) => <div>
+                                            <br/>
+                                            <span>{item[0]}</span><>&nbsp;&nbsp;&nbsp;</>
+                                            <button onClick={(e)=> {
+                                                                    let tmp = account.chatChannels;
+                                                                    tmp[chatIndex].users.push({name: item[0], administrator: false, mute: false});
+                                                                    changeAccount({chatChannels: tmp});
+                                                                    handleSearch("");}}>Add User</button><>&nbsp;&nbsp;&nbsp;</>
+																						<button onClick={(e)=> {
+												                                           let tmp = account.chatChannels;
+												                                           tmp[chatIndex].users.push({name: item[0], administrator: true, mute: false});
+												                                           changeAccount({chatChannels: tmp});
+												                                           handleSearch("");}}>Add administrator</button>
+                                         </div>)}
+          </div>);
+}
+
 const ChannelInfo: React.FC<chatProps3> = ({ account, changeAccount, chatIndex }) => {
   const [info, setInfo] = useState<boolean>(false);
+	const [viewUsers, setViewUsers] = useState<boolean>(false);
   const [settings, setSettings] = useState<boolean>(false);
   const [specific, setSpecific] = useState<"non-block" | "block" | "public" | "private" | "password" | ''>('');
   const [password, setPassword] = useState<string>('');
@@ -85,26 +120,29 @@ const ChannelInfo: React.FC<chatProps3> = ({ account, changeAccount, chatIndex }
   }
 
   return (<div>
-            <button onClick={()=>{setInfo(!info); setSettings(false); resetSettings();}}>Channel Info</button><>&nbsp;&nbsp;&nbsp;</>
-            {account.chatChannels[chatIndex!].owner === account.name && <button onClick={()=>{setSettings(!settings); setInfo(false); resetSettings();}}>Settings</button>}
-            {info && <>
-                      <ul>
-                        <li>{`Type: ${account.chatChannels[chatIndex!].specific}`}</li>
-                        <li>{`Owner: ${account.chatChannels[chatIndex!].owner}`}</li>
-                        {account.chatChannels[chatIndex!].specific === "password" && <li>{`Password: ${account.chatChannels[chatIndex].password}`}</li>}
-                        <li>{account.chatChannels[chatIndex!].users.find((elem)=>elem.name === account.name)!.administrator ?
-                            "You have administrator rights in this channel" : "You have no rights in this channel"}</li>
-                      </ul>
-                      <ul>
-                        <label>Users</label>
-                        {account.chatChannels[chatIndex].users.map((item, index)=>{return (<div>
-                                                                                              {item.name !== account.name && <li>{item.name + " --- " + (item.administrator ? "administrator" : "user") + (item.mute ? " --- mute   " : "   ")}
-                                                                                              {account.chatChannels[chatIndex!].owner === account.name && <button onClick={(e)=>changeAdmin(index)}>Change Status</button>}
-                                                                                              {account.chatChannels[chatIndex!].users.find((elem)=>elem.name === account.name)!.administrator && <button onClick={(e)=>ban(index)}>Ban</button>}
-                                                                                              {account.chatChannels[chatIndex!].users.find((elem)=>elem.name === account.name)!.administrator && <button onClick={(e)=>mute(index)}>{item.mute ? "Unmute" : "mute"}</button>}</li>}
-                                                                                            </div>);})}
-                      </ul>
-                    </>}
+            <button onClick={()=>{setInfo(!info); setSettings(false); setViewUsers(false); resetSettings();}}>Channel Info</button><>&nbsp;&nbsp;&nbsp;</>
+						<button onClick={()=>{setViewUsers(!viewUsers); setSettings(false); setInfo(false); resetSettings();}}>Users</button><>&nbsp;&nbsp;&nbsp;</>
+            {account.chatChannels[chatIndex!].owner === account.name && <button onClick={()=>{setSettings(!settings); setInfo(false); setViewUsers(false); resetSettings();}}>Settings</button>}
+            {info && <ul>
+                      <li>{`Type: ${account.chatChannels[chatIndex!].specific}`}</li>
+                      <li>{`Owner: ${account.chatChannels[chatIndex!].owner}`}</li>
+                      {account.chatChannels[chatIndex!].specific === "password" && <li>{`Password: ${account.chatChannels[chatIndex].password}`}</li>}
+                      <li>{account.chatChannels[chatIndex!].users.find((elem)=>elem.name === account.name)!.administrator ?
+                          "You have administrator rights in this channel" : "You have no rights in this channel"}</li>
+                    </ul>}
+            {viewUsers && <>
+														<AddUsers account={account} changeAccount={changeAccount} chatIndex={chatIndex}/>
+														<h3>Users</h3>
+														<ul>
+															{account.chatChannels[chatIndex].users.length === 1 ? <p>No other users</p> :
+																																									account.chatChannels[chatIndex].users.map((item, index)=>{return (<div>
+																												                                                                                              {item.name !== account.name && <li>{item.name + " --- " + (item.administrator ? "administrator" : "user") + (item.mute ? " --- mute   " : "   ")}
+																												                                                                                              {account.chatChannels[chatIndex!].owner === account.name && <button onClick={(e)=>changeAdmin(index)}>Change Status</button>}
+																												                                                                                              {account.chatChannels[chatIndex!].users.find((elem)=>elem.name === account.name)!.administrator && <button onClick={(e)=>ban(index)}>Ban</button>}
+																												                                                                                              {account.chatChannels[chatIndex!].users.find((elem)=>elem.name === account.name)!.administrator && <button onClick={(e)=>mute(index)}>{item.mute ? "Unmute" : "mute"}</button>}</li>}
+																												                                                                                            </div>);})}
+                      	    </ul>
+													</>}
             {settings && <>
                           <br/><br/>
                           <label>public</label>
@@ -139,8 +177,8 @@ const Message: React.FC<chatProps2> = ({ account, changeAccount, chatIndex, bloc
   return (<div>
             {account.chatChannels[chatIndex].history.map((elem)=> <p>{`${elem.name} --- ${elem.message}`}</p>)}
             <input type="text" value={message} onChange={(e)=>changeMessage(e.target.value)}/>
-            {block !== "block" ? <input type="submit" value="Send" onClick={(e)=>submitMessage()}/>
-                                : <input type="submit" value="Send" onClick={(e)=>submitMessage()} disabled/>}
+            {block !== "block" ? <input type="submit" value="Message" onClick={(e)=>submitMessage()}/>
+                                : <input type="submit" value="Message" onClick={(e)=>submitMessage()} disabled/>}
           </div>);
 }
 
