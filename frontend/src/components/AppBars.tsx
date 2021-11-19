@@ -102,22 +102,22 @@ const AppBars = (): JSX.Element => {
 
   const [openSideBar, setOpenSideBar] = useState<boolean>(false)
   const sideBarItems: SideBarItem[] = [
+    // {
+    //   name: 'Menu',
+    //   route: '/'
+    // },
     {
-      name: 'Menu',
-      route: '/'
-    },
-    {
-      name: 'Game',
+      name: 'Play',
       route: '/game'
     },
     {
-      name: 'Chats',
+      name: 'Chat',
       route: '/chat'
     },
-    {
-      name: 'Stats',
-      route: '/stats'
-    },
+    // {
+    //   name: 'Stats',
+    //   route: '/stats'
+    // },
     {
       name: 'LeaderBoard',
       route: '/leaderboard'
