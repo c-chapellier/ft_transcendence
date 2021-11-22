@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import accountType from '../../types/accountType';
 import { dataBaseGames } from '../../types/database';
+import PongGame from './components/PongGame';
 
 const dataBaseMaps = ['black', 'white', 'winter', 'summer', 'night'];
 
@@ -115,7 +116,9 @@ const Play: React.FC<playProps> = ({ account, changeAccount }) => {
     return (<div>
               <button onClick={()=>{changeGame(null); changeGetGame(null);}}>Back</button>
               <h1>GAME</h1>
-              {/* <GamePong account={account} changeAccount={changeAccount} backToPage={backToPage} game={game}/> */}
+              {/* <GamePong account={account} changeAccount={changeAccount} backToPage={backToPage} game={game}/> */
+                <PongGame />
+              }
             </div>);
   } else if (game !== null) {
     return <PreGamePage account={account} changeAccount={changeAccount} getGame={getGame} changeGetGame={changeGetGame} changeGame={changeGame} game={game}/>;
