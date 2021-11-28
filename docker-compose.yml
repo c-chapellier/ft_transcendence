@@ -1,19 +1,17 @@
 version: "3.7"
 services:
   frontend:
+    container_name: frontend
+    restart: always
     build: frontend
-    ports:
-      - 3000:3000
     stdin_open: true
     volumes:
       - ./frontend:/usr/src/app
       - /usr/src/app/node_modules
-    container_name: frontend
-    restart: always
-    networks:
-      - react-nest
     depends_on:
       - backend
+    ports:
+      - 3000:3000
 
   backend:
     container_name: backend
@@ -24,9 +22,21 @@ services:
       - /usr/src/app/node_modules
     depends_on:
       - postgres
-    networks:
-      - nest-postgres
-      - react-nest
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: postgres
+      PORT: 3000
+      MODE: DEV
+      RUN_MIGRATIONS: true
+      OAUTH_42_CLIENT_ID: da2dcd376acb7bbfa61dc009248e6d317a7e0d29d8908f77ded3016c7dd89f42
+      OAUTH_42_SECRET: 4e588d9794d022839eec7aaac36c8eb44abfef8d0642391cd30b497c598e299a
+      OAUTH_42_REDIRECT_URL: http://localhost:3001/auth/redirect
+      JWT_SECRET: topSecret51
+      JWT_EXPIRATION_TIME: 3600
+      TWO_FACTOR_AUTHENTICATION_APP_NAME: ft_transcendence
     ports:
       - 3001:3001
     expose:
@@ -42,9 +52,3 @@ services:
       PGDATA: /data/postgres
     ports:
       - 5432:5432
-    networks:
-      - nest-postgres
-
-networks:
-  react-nest:
-  nest-postgres:
