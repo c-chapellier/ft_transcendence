@@ -1,17 +1,13 @@
 import { StatusEnum } from "./../components/enum";
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  UpdateDateColumn,
-  CreateDateColumn,
-  OneToMany,
-} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { ChannelEntity } from "./channel.entity";
 import { MessageEntity } from "./message.entity";
+import { DmEntity } from "./dm.entity";
+import { ConversationEntity } from "./conversation.entity";
+import { TimestampEntites } from "./generic/timestamp";
 
 @Entity({ name: "user" })
-export class UserEntity {
+export class UserEntity extends TimestampEntites {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -59,6 +55,9 @@ export class UserEntity {
 
   @OneToMany((type) => MessageEntity, (message) => message.sender)
   messages: MessageEntity[];
+
+  @OneToMany((type) => DmEntity, (message) => message.sender)
+  dm: DmEntity[];
 
   @OneToMany((type) => ChannelEntity, (channel) => channel.owner)
   channels: ChannelEntity[];

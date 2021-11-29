@@ -11,6 +11,9 @@ import { TypeORMSession } from "./model/session.entity";
 // import { TwoFactorAuthenticationController } from "./two-factor-authentication/two-factor-authentication.controller";
 // import { TwoFactorAuthenticationService } from "./two-factor-authentication/two-factor-authentication.service";
 import { TwoFactorAuthenticationModule } from "./two-factor-authentication/two-factor-authentication.module";
+import { ChatGateway } from "./chat.gateway";
+import { ConversationModule } from "./conversation/conversation.module";
+import { DmModule } from "./dm/dm.module";
 
 @Module({
   imports: [
@@ -23,8 +26,10 @@ import { TwoFactorAuthenticationModule } from "./two-factor-authentication/two-f
     AuthModule,
     TypeOrmModule.forFeature([TypeORMSession]),
     TwoFactorAuthenticationModule,
+    ConversationModule,
+    DmModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [ChatGateway],
 })
 export class AppModule {}

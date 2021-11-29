@@ -1,5 +1,6 @@
-import { ChannelDTO } from "@src/channel/channel.dto";
-import { MessageDTO } from "@src/message/message.dto";
+import { ChannelDTO } from "../channel/dto/channel.dto";
+import { MessageDTO } from "../message/dto/message.dto";
+import { DmDTO } from "../dm/dto/dm.dto";
 import { IsBoolean, IsNumber, IsString, IsUUID } from "class-validator";
 import { UserEntity } from "../model/user.entity";
 
@@ -30,7 +31,11 @@ export class UserDTO implements Readonly<UserDTO> {
 
   messages?: MessageDTO[];
 
+  dm?: DmDTO[];
+
   channels?: ChannelDTO[];
+
+  // conversations?: ConversationDTO[];
 
   public static from(dto: Partial<UserDTO>) {
     const newUser = new UserDTO();
@@ -47,7 +52,9 @@ export class UserDTO implements Readonly<UserDTO> {
     newUser.nbrVictory = dto.nbrVictory;
     newUser.nbrLoss = dto.nbrLoss;
     newUser.messages = dto.messages;
+    newUser.dm = dto.dm;
     newUser.channels = dto.channels;
+    // newUser.conversations = dto.conversations;
     return newUser;
   }
 
@@ -65,8 +72,16 @@ export class UserDTO implements Readonly<UserDTO> {
       score: entity.score,
       nbrVictory: entity.nbrVictory,
       nbrLoss: entity.nbrLoss,
-      // messages: entity.messages ? entity.messages.map(m => MessageDTO.fromEntity(m)) : [],
-      // channels: entity.channels ? entity.channels.map(m => ChannelDTO.fromEntity(m)) : []
+      messages: entity.messages
+        ? entity.messages.map((m) => MessageDTO.fromEntity(m))
+        : [],
+      dm: entity.dm ? entity.dm.map((m) => DmDTO.fromEntity(m)) : [],
+      channels: entity.channels
+        ? entity.channels.map((m) => ChannelDTO.fromEntity(m))
+        : [],
+      // conversations: entity.conversations
+      //   ? entity.conversations.map((m) => ConversationDTO.fromEntity(m))
+      //   : [],
     });
   }
 
@@ -84,8 +99,10 @@ export class UserDTO implements Readonly<UserDTO> {
     newUser.score = this.score;
     newUser.nbrVictory = this.nbrVictory;
     newUser.nbrLoss = this.nbrLoss;
-    // newUser.messages = this.messages.map(m => m.toEntity())
-    // newUser.channels = this.channels.map(c => c.toEntity())
+    newUser.messages = this.messages.map((m) => m.toEntity());
+    newUser.dm = this.dm.map((m) => m.toEntity());
+    newUser.channels = this.channels.map((c) => c.toEntity());
+    // newUser.conversations = this.conversations.map((c) => c.toEntity());
     return newUser;
   }
 }

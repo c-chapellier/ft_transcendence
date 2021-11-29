@@ -30,7 +30,7 @@ services:
       POSTGRES_DATABASE: postgres
       PORT: 3000
       MODE: DEV
-      RUN_MIGRATIONS: true
+      RUN_MIGRATIONS: "true"
       OAUTH_42_CLIENT_ID: da2dcd376acb7bbfa61dc009248e6d317a7e0d29d8908f77ded3016c7dd89f42
       OAUTH_42_SECRET: 4e588d9794d022839eec7aaac36c8eb44abfef8d0642391cd30b497c598e299a
       OAUTH_42_REDIRECT_URL: http://localhost:3001/auth/redirect

@@ -6,11 +6,11 @@ import { UserEntity } from "../model/user.entity";
 import { UserDTO } from "../user/user.dto";
 import { ChannelService } from "@src/channel/channel.service";
 import { ChannelEntity } from "@src/model/channel.entity";
-import { ChannelDTO } from "@src/channel/channel.dto";
-import { channel } from "diagnostics_channel";
+import { ChannelDTO } from "@src/channel/dto/channel.dto";
+// import { channel } from "diagnostics_channel";
 import { MessageEntity } from "@src/model/message.entity";
 import { MessageService } from "@src/message/message.service";
-import { MessageDTO } from "@src/message/message.dto";
+import { MessageDTO } from "@src/message/dto/message.dto";
 import { StatusEnum } from "@src/components/enum";
 
 const run = async () => {
@@ -62,6 +62,7 @@ async function createUsers(connection: Connection) {
     //   nbrLoss: 736,
     //   messages: [],
     //   channels: [],
+    // dm: [],
     // },
     {
       name: "Gautier",
@@ -76,6 +77,7 @@ async function createUsers(connection: Connection) {
       nbrLoss: 1,
       messages: [],
       channels: [],
+      dm: [],
     },
     {
       name: "Arthur",
@@ -90,6 +92,7 @@ async function createUsers(connection: Connection) {
       nbrLoss: 20,
       messages: [],
       channels: [],
+      dm: [],
     },
     {
       name: "Corentin",
@@ -104,6 +107,7 @@ async function createUsers(connection: Connection) {
       nbrLoss: 0,
       messages: [],
       channels: [],
+      dm: [],
     },
   ];
 
@@ -158,6 +162,7 @@ async function createMessages(connection: Connection) {
   const messageService = new MessageService(
     connection.getRepository(MessageEntity)
   );
+  console.log("one..");
   const channels = await new ChannelService(
     connection.getRepository(ChannelEntity)
   ).getAllChannels();

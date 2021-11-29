@@ -1,13 +1,14 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ChannelEntity } from '../model/channel.entity';
-import { ChannelController } from './channel.controller';
-import { ChannelService } from './channel.service';
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { ChannelEntity } from "../model/channel.entity";
+import { ChannelController } from "./channel.controller";
+import { ChannelService } from "./channel.service";
+import { UserModule } from "../user/user.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ChannelEntity])],
+  imports: [UserModule, TypeOrmModule.forFeature([ChannelEntity])],
   providers: [ChannelService],
   controllers: [ChannelController],
-  exports: []
+  exports: [ChannelService],
 })
-export class ChannelModule { }
+export class ChannelModule {}
