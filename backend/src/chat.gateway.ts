@@ -14,8 +14,7 @@ import { Socket, Server } from "socket.io";
 @WebSocketGateway({ cors: true })
 //  , OnGatewayConnection, OnGatewayDisconnect
 export class ChatGateway
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
-{
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() wss: Server;
 
   private logger: Logger = new Logger("ChatGateway");
@@ -94,6 +93,12 @@ export class ChatGateway
   handleJoinRoom(client: Socket, room: string) {
     client.join(room);
     client.emit("joinedRoom", room);
+  }
+
+  @SubscribeMessage("USER_ONLINE")
+  handleTest(client: Socket, user: string) {
+    this.logger.log(`Server Got Message from ${user}`);
+    client.emit("USER_ONLINE", "Si si la famille");
   }
 
   @SubscribeMessage("leaveRoom")
