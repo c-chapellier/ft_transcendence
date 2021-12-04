@@ -72,5 +72,16 @@ export class ChannelService {
       .save(channel)
       .then((channel) => ChannelDTO.fromEntity(channel));
   }
-  //   return this.service.adduser(dto);
+
+  public async deleteChannel(id: string): Promise<ChannelDTO> {
+    const chan = await this.getOneChannel(id);
+
+    // const dto = chan.toE();
+
+    const res = await this.repo.softRemove(chan.toEntity());
+
+    console.log(res);
+    return chan;
+    //   .then((channel) => ChannelDTO.fromEntity(channel));
+  }
 }

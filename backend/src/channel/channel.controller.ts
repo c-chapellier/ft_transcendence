@@ -72,4 +72,10 @@ export class ChannelController {
 
     return this.service.deleteUser(channel, user);
   }
+
+  @Post("/deletechannel/:id")
+  @UsePipes(ValidationPipe)
+  public async deleteChannel(@Param("id") id: string): Promise<ChannelDTO> {
+    return this.service.deleteChannel(id);
+  }
 }
