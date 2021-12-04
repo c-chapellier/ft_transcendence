@@ -9,7 +9,7 @@ import {
   ValidationPipe,
 } from "@nestjs/common";
 import { UserService } from "./user.service";
-import { UserDTO } from "./user.dto";
+import { UserDTO } from "./dto/user.dto";
 
 @Controller("user")
 export class UserController {
@@ -27,7 +27,16 @@ export class UserController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  public async post(@Body() dto: UserDTO): Promise<UserDTO> {
+  public async create(@Body() dto: UserDTO): Promise<UserDTO> {
     return this.service.create(dto);
+  }
+
+  @Post(":id")
+  public async updateProfile(
+    @Param("id") id: string,
+    @Body() dto: UserDTO
+  ): Promise<UserDTO> {
+    console.log(dto);
+    return this.service.updateProfile(id, dto);
   }
 }

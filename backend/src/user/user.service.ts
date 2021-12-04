@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UserEntity } from "../model/user.entity";
-import { Repository } from "typeorm";
-import { UserDTO } from "./user.dto";
+import { Repository, getConnection } from "typeorm";
+import { UserDTO } from "./dto/user.dto";
 
 @Injectable()
 export class UserService {
@@ -29,6 +29,16 @@ export class UserService {
   public async create(dto: UserDTO): Promise<UserDTO> {
     const user = this.repository.create(dto);
     return this.repository.save(dto).then((user) => UserDTO.fromEntity(user));
+  }
+
+  public async updateProfile(id: string, dto: UserDTO): Promise<UserDTO> {
+    await getConnection()
+      .createQueryBuilder()
+      .update(UserEntity)
+      .set({ ...dto })
+      .where("id = :id", { id: id })
+      .execute();
+    return this.getUserById(id);
   }
 
   public async setTwoFactorAuthenticationSecret(

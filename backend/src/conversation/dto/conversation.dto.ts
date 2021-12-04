@@ -1,6 +1,6 @@
 import { DmDTO } from "../../dm/dto/dm.dto";
 import { ConversationEntity } from "../../model/conversation.entity";
-import { UserDTO } from "../../user/user.dto";
+import { UserDTO } from "../../user/dto/user.dto";
 
 export class ConversationDTO implements Readonly<ConversationDTO> {
   id?: string;

@@ -3,7 +3,7 @@ import { createConnection, ConnectionOptions, Connection } from "typeorm";
 import { configService } from "../config/config.service";
 import { UserService } from "../user/user.service";
 import { UserEntity } from "../model/user.entity";
-import { UserDTO } from "../user/user.dto";
+import { UserDTO } from "../user/dto/user.dto";
 import { ChannelService } from "@src/channel/channel.service";
 import { ChannelEntity } from "@src/model/channel.entity";
 import { ChannelDTO } from "@src/channel/dto/channel.dto";

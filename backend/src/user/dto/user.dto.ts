@@ -1,17 +1,23 @@
-import { ChannelDTO } from "../channel/dto/channel.dto";
-import { MessageDTO } from "../message/dto/message.dto";
-import { DmDTO } from "../dm/dto/dm.dto";
-import { IsBoolean, IsNumber, IsString, IsUUID } from "class-validator";
-import { UserEntity } from "../model/user.entity";
+import { ChannelDTO } from "../../channel/dto/channel.dto";
+import { MessageDTO } from "../../message/dto/message.dto";
+import { DmDTO } from "../../dm/dto/dm.dto";
+import {
+  IsBoolean,
+  IsNumber,
+  IsString,
+  IsUUID,
+  IsOptional,
+} from "class-validator";
+import { UserEntity } from "../../model/user.entity";
 
 export class UserDTO implements Readonly<UserDTO> {
   id?: string;
 
-  name: string;
+  name?: string;
 
   login?: string;
 
-  avatar: string;
+  avatar?: string;
 
   description?: string;
 

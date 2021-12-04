@@ -1,19 +1,19 @@
 import { MessageDTO } from "../../message/dto/message.dto";
 import { ChannelEntity } from "../../model/channel.entity";
-import { UserDTO } from "../../user/user.dto";
+import { UserDTO } from "../../user/dto/user.dto";
 
 export class ChannelDTO implements Readonly<ChannelDTO> {
-  id: string;
+  id?: string;
 
-  name: string;
+  name?: string;
 
-  pwd: string;
+  pwd?: string;
 
-  owner: UserDTO;
+  owner?: UserDTO;
 
-  users: UserDTO[];
+  users?: UserDTO[];
 
-  messages: MessageDTO[];
+  messages?: MessageDTO[];
 
   public static from(dto: Partial<ChannelDTO>) {
     const newChannel = new ChannelDTO();
@@ -32,13 +32,13 @@ export class ChannelDTO implements Readonly<ChannelDTO> {
       id: entity.id,
       pwd: entity.pwd,
       name: entity.name,
-      // owner: UserDTO.fromEntity(entity.owner),
-      // users: entity.users
-      //   ? entity.users.map((user) => UserDTO.fromEntity(user))
-      //   : [],
-      // messages: entity.messages
-      //   ? entity.messages.map((message) => MessageDTO.fromEntity(message))
-      //   : [],
+      owner: entity.owner ? UserDTO.fromEntity(entity.owner) : null,
+      users: entity.users
+        ? entity.users.map((user) => UserDTO.fromEntity(user))
+        : [],
+      messages: entity.messages
+        ? entity.messages.map((message) => MessageDTO.fromEntity(message))
+        : [],
     });
   }
 
@@ -47,10 +47,10 @@ export class ChannelDTO implements Readonly<ChannelDTO> {
     newChannel.id = this.id;
     newChannel.name = this.name;
     newChannel.pwd = this.pwd;
-    // newChannel.owner = this.owner.toEntity();
-    // newChannel.users = this.users.map((user) => user.toEntity()) || [];
-    // newChannel.messages =
-    //   this.messages.map((message) => message.toEntity()) || [];
+    newChannel.owner = this.owner.toEntity();
+    newChannel.users = this.users.map((user) => user.toEntity()) || [];
+    newChannel.messages =
+      this.messages.map((message) => message.toEntity()) || [];
     return newChannel;
   }
 }

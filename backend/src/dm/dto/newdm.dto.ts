@@ -1,6 +1,6 @@
 import { ConversationDTO } from "../../conversation/dto/conversation.dto";
 import { DmEntity } from "../../model/dm.entity";
-import { UserDTO } from "../../user/user.dto";
+import { UserDTO } from "../../user/dto/user.dto";
 import { IsNotEmpty, IsString } from "class-validator";
 
 export class NewDmDTO implements Readonly<NewDmDTO> {

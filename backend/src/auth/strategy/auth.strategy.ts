@@ -6,7 +6,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { UserEntity } from "../../model/user.entity";
 import { UserService } from "../../user/user.service";
-import { UserDTO } from "../../user/user.dto";
+import { UserDTO } from "../../user/dto/user.dto";
 
 @Injectable()
 export class AuthStrategy extends PassportStrategy(Strategy, "auth42") {

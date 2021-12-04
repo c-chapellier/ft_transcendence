@@ -1,6 +1,6 @@
 import { ChannelDTO } from "../../channel/dto/channel.dto";
 import { MessageEntity } from "../../model/message.entity";
-import { UserDTO } from "../../user/user.dto";
+import { UserDTO } from "../../user/dto/user.dto";
 
 export class MessageDTO implements Readonly<MessageDTO> {
   id?: string;
